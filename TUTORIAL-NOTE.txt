@@ -1,0 +1,32 @@
+Nest Js tutorial 
+
+==== Part 2  => creating modules and conntrollers
+
+controllers  => tells the application which route to load
+service  => codes containing application working logics 
+module => 
+
+@ this is called a decorator in nest js
+
+To see list of available nest options . simply type "nest" in the cmd 
+
+to create a new module => nest g mo <file name> 
+to create a new controller => nest g co <file name> (--no-spec is used to disable creation of test file )
+
+
+==== Part 3  => Dependency Injection
+
+@Injectable decorator is used to tell nest js that a component can be used in another file 
+
+=== Part 4 => Validation in nest js 
+
+@Body() is used to access the parameter of the request body in post requests 
+@Httpcode is used to set the status code for a post request
+DTO => the dto is used to validate and describe the shape of our request 
+
+validation are done through pipes in nest js (refer to documentation )
+
+to use the inbuilt validation pipe install them using npm => $ npm i --save class-validator class-transformer
+
+ 
+ 
