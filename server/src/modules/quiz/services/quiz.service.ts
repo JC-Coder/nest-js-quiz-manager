@@ -1,37 +1,37 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { CreateQuizDto } from "../dto/CreateQuiz.dto";
-import { Quiz } from "../entities/quiz.entity";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateQuizDto } from '../dto/CreateQuiz.dto';
+import { Quiz } from '../entities/quiz.entity';
 
 @Injectable()
-
 export class QuizService {
-    
-    constructor(@InjectRepository(Quiz) private quizRepository: Repository<Quiz> ){
+  constructor(
+    @InjectRepository(Quiz) private quizRepository: Repository<Quiz>,
+  ) {}
 
-    }
+  // get all quizes
 
-    // get all quizes
+  async getAllQuiz(): Promise<Quiz[]> {
+    return await this.quizRepository
+      .createQueryBuilder('q')
+      .leftJoinAndSelect('q.questions', 'qt')
+      .leftJoinAndSelect('qt.options', 'op')
+      .getMany();
+  }
 
-    getAllQuiz() { 
-        return this.quizRepository.find();
-    }
+  // get one quiz via id
 
-    // get one quiz via id
+  async getQuizById(id: number): Promise<Quiz> {
+    return await this.quizRepository.findOne({
+      where: { id: id },
+      relations: ['questions', 'questions.options'],
+    });
+  }
 
-    async getQuizById(id: number): Promise<Quiz>{
-        return await this.quizRepository.findOne({
-            where: {id: id},
-            relations: ['questions']
-        })
-    }
-    
+  // create new quiz
 
-    // create new quiz
-
-    async createNewQuiz(quiz: CreateQuizDto){
-        return await this.quizRepository.save(quiz);
-    }
+  async createNewQuiz(quiz: CreateQuizDto) {
+    return await this.quizRepository.save(quiz);
+  }
 }
- 
