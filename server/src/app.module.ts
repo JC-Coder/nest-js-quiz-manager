@@ -1,14 +1,18 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmConfigAsync } from './modules/quiz/config/typeorm.config';
+import { typeOrmAsyncConfig } from './config/typeorm.config';
 import { QuizModule } from './modules/quiz/quiz.module';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRootAsync(typeOrmConfigAsync),
-    ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+    ConfigModule.forRoot({ isGlobal: true }),
     QuizModule,
+    UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
