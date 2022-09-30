@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MetadataAlreadyExistsError, Repository } from 'typeorm';
 import { User } from './user.entity';
 
 @Injectable()
@@ -18,6 +18,12 @@ export class UserService {
       email: userRegister.email,
       password: userRegister.password
     });
+
+    const emailExists = await this.userRepository.findOne({
+      where: {email: user.email}
+    })
+
+    if(emailExists) throw new HttpException('user with this email already exists ', 400);
 
     return await this.userRepository.save(user);
   }

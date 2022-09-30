@@ -18,7 +18,7 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       autoLoadEntities: true,
       migrations: [__dirname + '/../migrations/*{.ts,.js}'],
       extra: {
-        charset: 'utf8mb4_unicode_ci'
+        charset: 'utf8mb4_unicode_ci',
       }
     }
   }
@@ -35,5 +35,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   migrations: [__dirname + '/../migrations/*{.ts,.js}'],
   extra: {
     charset: 'utf8mb4_unicode_ci',
-  }
+  },
 }
