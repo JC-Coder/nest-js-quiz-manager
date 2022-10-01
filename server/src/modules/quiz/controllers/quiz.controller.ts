@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Post,
   Query,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -15,6 +16,7 @@ import { Quiz } from '../entities/quiz.entity';
 import { QuizService } from '../services/quiz.service';
 import { ApiTags } from '@nestjs/swagger';
 import { Pagination } from 'nestjs-typeorm-paginate';
+import { AdminRoleGuard } from 'src/modules/auth/admin-role.guard';
 
 
 
@@ -35,7 +37,7 @@ export class QuizController {
   async getPaginateQuiz(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1, @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number
   ): Promise<Pagination<Quiz>> {
-    limit = limit > 100 ? 100: limit;
+    limit = limit > 100 ? 100: limit; 
     return await this.quizService.paginate({
       page, limit
     });
@@ -51,6 +53,7 @@ export class QuizController {
 
   @Post('/create')
   @UsePipes(ValidationPipe)
+  @UseGuards(AdminRoleGuard)
   async createQuiz(@Body() quizData: CreateQuizDto) {
     return await this.quizService.createNewQuiz(quizData);
   }

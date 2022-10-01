@@ -38,4 +38,14 @@ export class UserService {
     return result;
   }
 
+
+   // get user by id 
+   async getUserById(id: number): Promise<User | undefined>{
+    let result = await this.userRepository.findOne({
+      where: {id: id}
+    })
+
+    return result;
+  }
+
 }
