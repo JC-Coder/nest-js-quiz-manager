@@ -20,6 +20,7 @@ export class AuthController {
     }
 
 
+    // user profile
     @UseGuards(JwtAuthGuard)
     @Get('user')
     async user(@Request() req): Promise<any>{

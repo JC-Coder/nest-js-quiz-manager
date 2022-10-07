@@ -17,6 +17,7 @@ import { QuizService } from '../services/quiz.service';
 import { ApiTags } from '@nestjs/swagger';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { AdminRoleGuard } from 'src/modules/auth/admin-role.guard';
+import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
 
 
 
@@ -26,7 +27,7 @@ export class QuizController {
   constructor(private quizService: QuizService) {}
 
   // Get all quizes
-
+  @UseGuards(JwtAuthGuard,AdminRoleGuard)
   @Get('/')
   async getAllQuiz(): Promise<Quiz[]> {
     return await this.quizService.getAllQuiz();
@@ -50,10 +51,8 @@ export class QuizController {
   }
 
   // create new quiz
-
   @Post('/create')
   @UsePipes(ValidationPipe)
-  @UseGuards(AdminRoleGuard)
   async createQuiz(@Body() quizData: CreateQuizDto) {
     return await this.quizService.createNewQuiz(quizData);
   }
