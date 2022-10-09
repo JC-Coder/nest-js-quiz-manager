@@ -52,6 +52,7 @@ export class QuizController {
 
   // create new quiz
   @Post('/create')
+  @UseGuards(JwtAuthGuard, AdminRoleGuard)
   @UsePipes(ValidationPipe)
   async createQuiz(@Body() quizData: CreateQuizDto) {
     return await this.quizService.createNewQuiz(quizData);

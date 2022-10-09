@@ -27,6 +27,9 @@ export class User {
   @Column()
   password: string;
 
+  @Column()
+  role: string;
+
   @ApiProperty({description: 'When user was created'})
   @CreateDateColumn()
   createdAt: Date;
